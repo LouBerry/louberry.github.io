@@ -7,6 +7,7 @@
     "start": "vite",
     "dev": "vite",
     "build": "vite build",
+    "deploy": "gh-pages -d dist",
     "serve": "vite preview",
     "test": "vitest",
     "postinstall": "node ./fix-jest-dom.mjs"
@@ -14,6 +15,7 @@
   "license": "MIT",
   "devDependencies": {
     "@testing-library/jest-dom": "^5.16.4",
+    "gh-pages": "^4.0.0",
     "jsdom": "^19.0.0",
     "solid-testing-library": "^0.3.0",
     "typescript": "^4.6.4",
