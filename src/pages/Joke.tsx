@@ -1,5 +1,6 @@
 import { Component, createEffect, createResource, createSignal, For, Suspense } from 'solid-js';
 import axios, { AxiosResponse } from 'axios';
+import { setState, state } from '../App';
 
 type ApiOrigin = {
     category: string;
@@ -44,22 +45,41 @@ const Joke: Component = () => {
         if (config.url === origins[2].url) setJoke(data.text)
     })
 
-    const handle = () => {
-        refetch()
+    const handleApiSelection = (event: Event & {
+        currentTarget: HTMLSelectElement;
+        target: Element;
+    }) => {
+        event.preventDefault()
+        const selection = event.currentTarget.value;
+        for (const origin of origins) {
+            console.log(origin.category + ' - ' + selection)
+            if (origin.category === selection) {
+                setApi(origin.url)
+                setState((state) => ({ ...state, apiUsed: origin.category }))
+            }
+        }
     }
+
 
     return (
         <div>
+            <p>
+                Hi {state.name}
+            </p>
+            <p>
+                Category: {state.apiUsed}
+            </p>
             <form>
                 <label for="category">Choose category</label>
-                <select name="category" id="category" onChange={(event) => {
-                    event.preventDefault()
-                    setApi(event.currentTarget.value as string)
-                }}>
+                <select
+                    name="category"
+                    id="category"
+                    onChange={event => handleApiSelection(event)}
+                >
                     <option value="" disabled selected>Select your option</option>
                     <For each={origins}>
                         {(e: ApiOrigin) =>
-                            <option value={e.url} >{e.category}</option>
+                            <option value={e.category} >{e.category}</option>
                         }
                     </For>
                 </select>
@@ -69,7 +89,7 @@ const Joke: Component = () => {
                     {joke}
                 </div>
             </Suspense>
-            <button onclick={() => handle()}>Gimme more</button>
+            <button onclick={() => refetch()}>Gimme more</button>
         </div>
     );
 };
