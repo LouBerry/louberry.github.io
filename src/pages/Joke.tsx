@@ -28,6 +28,7 @@ function fetchData(apiUrl: string) {
         .then(res => {
             return res;
         })
+        .catch(err => err)
 }
 
 const Joke: Component = () => {
@@ -39,6 +40,10 @@ const Joke: Component = () => {
 
     createEffect(() => {
         if (!apiRes()) return;
+        if (apiRes().name === "AxiosError") {
+            setJoke(apiRes().message);
+            return;
+        }
         const { config, data }: AxiosResponse = apiRes()!;
         if (config.url === origins[0].url) setJoke(data[0].excuse)
         if (config.url === origins[1].url) setJoke(data.value)

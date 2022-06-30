@@ -7,7 +7,7 @@
     "start": "vite",
     "dev": "vite",
     "build": "vite build",
-    "deploy": "gh-pages -d dist",
+    "deploy": "vite build && gh-pages -d dist",
     "serve": "vite preview",
     "test": "vitest",
     "postinstall": "node ./fix-jest-dom.mjs"
