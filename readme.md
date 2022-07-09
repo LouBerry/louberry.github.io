@@ -4,3 +4,8 @@
 - https://excuser.herokuapp.com/v1/excuse/office
 - https://api.chucknorris.io/jokes/random
 - https://uselessfacts.jsph.pl/random.json?language=en
+
+
+
+pnpm add tailwindcss postcss autoprefixer   
+pnpm add solid-toast  
